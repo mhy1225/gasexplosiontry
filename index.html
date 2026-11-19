@@ -119,21 +119,21 @@
     </div>
   </section>
 
-  <!-- 氣爆相對位置互動地圖（完全貼合報導原文與原圖說） -->
+  <!-- 氣爆相對位置互動地圖（依真實地理相對位置：三多路在北、二聖路居中、一心路在南，交會於凱旋路） -->
   <section class="map-section" id="disaster-map">
     <div class="container">
       <div class="map-header reveal-up">
-        <span class="chapter-num">MAP // REPORT LOCATIONS &amp; ARCHIVE PHOTOS</span>
+        <span class="chapter-num">MAP // REAL RELATIVE ORIENTATION</span>
         <h2>報導提及之氣爆影響範圍與現場照片</h2>
         <p class="map-hint">
-          <span class="desktop-hint">將滑鼠移至標記點，檢視現場照片與原圖說</span>
-          <span class="mobile-hint">點擊標記點，檢視現場照片與原圖說</span>
+          <span class="desktop-hint">將滑鼠移至標記點，檢視現場照片與原圖說（上方為北、下方為南）</span>
+          <span class="mobile-hint">點擊標記點，檢視現場照片與原圖說（上方為北、下方為南）</span>
         </p>
       </div>
 
       <div class="map-wrapper reveal-up">
         <div class="tactical-map">
-          <!-- 僅標示報導原文提及之道路與區域：三多路、凱旋路、一心路一帶與二聖路一帶 -->
+          <!-- 依真實相對位置繪製：三多路（北，y=105）、二聖路一帶（中，y=250）、一心路（南，y=395），與南北向凱旋路（x=500）交會 -->
           <svg class="road-svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
             <defs>
               <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -142,35 +142,35 @@
             </defs>
             <rect width="800" height="500" fill="url(#grid)" />
 
-            <!-- 三多路 -->
-            <line x1="60" y1="130" x2="740" y2="130" stroke="#3a3a42" stroke-width="14"/>
-            <line x1="60" y1="130" x2="740" y2="130" stroke="#78756e" stroke-width="1.5" stroke-dasharray="10,8"/>
-            <text x="85" y="112" fill="#a09d96" font-size="14" font-family="Noto Sans TC">三多路</text>
+            <!-- 北側東西向：三多路 -->
+            <line x1="70" y1="105" x2="730" y2="105" stroke="#3a3a42" stroke-width="14"/>
+            <line x1="70" y1="105" x2="730" y2="105" stroke="#78756e" stroke-width="1.5" stroke-dasharray="10,8"/>
+            <text x="80" y="88" fill="#a09d96" font-size="14" font-family="Noto Sans TC">三多路（北）</text>
 
-            <!-- 二聖路一帶 -->
-            <line x1="100" y1="255" x2="720" y2="255" stroke="#2e2e35" stroke-width="10"/>
-            <text x="115" y="240" fill="#88857e" font-size="13" font-family="Noto Sans TC">二聖路一帶</text>
+            <!-- 中段東西向：二聖路一帶 -->
+            <line x1="70" y1="250" x2="730" y2="250" stroke="#2e2e35" stroke-width="11"/>
+            <text x="80" y="233" fill="#88857e" font-size="13" font-family="Noto Sans TC">二聖路一帶（中）</text>
 
-            <!-- 一心路 -->
-            <line x1="80" y1="380" x2="730" y2="380" stroke="#3a3a42" stroke-width="14"/>
-            <line x1="80" y1="380" x2="730" y2="380" stroke="#78756e" stroke-width="1.5" stroke-dasharray="10,8"/>
-            <text x="95" y="408" fill="#a09d96" font-size="14" font-family="Noto Sans TC">一心路</text>
+            <!-- 南側東西向：一心路 -->
+            <line x1="70" y1="395" x2="730" y2="395" stroke="#3a3a42" stroke-width="14"/>
+            <line x1="70" y1="395" x2="730" y2="395" stroke="#78756e" stroke-width="1.5" stroke-dasharray="10,8"/>
+            <text x="80" y="423" fill="#a09d96" font-size="14" font-family="Noto Sans TC">一心路（南）</text>
 
-            <!-- 凱旋路 -->
-            <line x1="415" y1="40" x2="535" y2="460" stroke="#474752" stroke-width="16"/>
-            <line x1="415" y1="40" x2="535" y2="460" stroke="#d9381e" stroke-width="2" stroke-dasharray="8,6"/>
-            <text x="548" y="210" fill="#e67e22" font-size="14" font-weight="bold" font-family="Noto Sans TC">凱旋路</text>
+            <!-- 南北向主軸：凱旋路 -->
+            <line x1="500" y1="35" x2="500" y2="465" stroke="#474752" stroke-width="16"/>
+            <line x1="500" y1="35" x2="500" y2="465" stroke="#d9381e" stroke-width="2" stroke-dasharray="8,6"/>
+            <text x="518" y="180" fill="#e67e22" font-size="14" font-weight="bold" font-family="Noto Sans TC">凱旋路（南北向）</text>
 
-            <!-- 方位標示 -->
-            <g transform="translate(730, 55)">
+            <!-- 北方方位標示 -->
+            <g transform="translate(735, 52)">
               <circle cx="0" cy="0" r="18" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
               <text x="-5" y="-22" fill="#e67e22" font-size="12" font-family="JetBrains Mono">N</text>
               <polygon points="0,-14 -4,4 0,0 4,4" fill="#d9381e"/>
             </g>
           </svg>
 
-          <!-- 標記 1：三多路、凱旋路一帶 -->
-          <button type="button" class="map-pin active" style="top: 26%; left: 54%;"
+          <!-- 標記 1：北側 三多路・凱旋路交會處（y=105 / 500 = 21%, x=500 / 800 = 62.5%） -->
+          <button type="button" class="map-pin active" style="top: 21%; left: 62.5%;"
             data-img="photo1.jpg"
             data-loc="報導提及：三多路、凱旋路一帶"
             data-title="圖／宋德威提供"
@@ -180,8 +180,8 @@
             <span class="pin-label">三多路・凱旋路一帶</span>
           </button>
 
-          <!-- 標記 2：二聖路一帶 -->
-          <button type="button" class="map-pin" style="top: 51%; left: 59%;"
+          <!-- 標記 2：中段 二聖路・凱旋路交會處（y=250 / 500 = 50%, x=500 / 800 = 62.5%） -->
+          <button type="button" class="map-pin" style="top: 50%; left: 62.5%;"
             data-img="photo2.jpg"
             data-loc="報導提及：二聖路一帶"
             data-title="圖／宋德威提供"
@@ -191,8 +191,8 @@
             <span class="pin-label">二聖路一帶</span>
           </button>
 
-          <!-- 標記 3：凱旋路、三多路與一心路一帶 -->
-          <button type="button" class="map-pin" style="top: 63%; left: 62%;"
+          <!-- 標記 3：南側 凱旋路沿線（y=335 / 500 = 67%, x=500 / 800 = 62.5%） -->
+          <button type="button" class="map-pin" style="top: 67%; left: 62.5%;"
             data-img="photo3.jpg"
             data-loc="報導提及：凱旋路、三多路與一心路一帶"
             data-title="圖／宋德威提供"
@@ -202,8 +202,8 @@
             <span class="pin-label">凱旋路・一心路一帶</span>
           </button>
 
-          <!-- 標記 4：凱旋路、三多路與一心路一帶 -->
-          <button type="button" class="map-pin" style="top: 76%; left: 64%;"
+          <!-- 標記 4：南側 一心路・凱旋路交會處（y=395 / 500 = 79%, x=500 / 800 = 62.5%） -->
+          <button type="button" class="map-pin" style="top: 79%; left: 62.5%;"
             data-img="photo4.jpg"
             data-loc="報導提及：凱旋路、三多路與一心路一帶"
             data-title="圖／李珮瑄提供"
