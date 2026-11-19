@@ -176,4 +176,34 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   animateParticles();
+  // 6. 氣爆相對位置地圖：滑鼠移入（桌機）與點擊（手機）切換現場照片
+  const mapPins = document.querySelectorAll('.map-pin');
+  const popupCard = document.getElementById('mapPopupCard');
+  const popupImg = document.getElementById('popupImg');
+  const popupLoc = document.getElementById('popupLoc');
+  const popupTitle = document.getElementById('popupTitle');
+  const popupDesc = document.getElementById('popupDesc');
+
+  function activateMapPin(pin) {
+    if (!popupCard || pin.classList.contains('active')) return;
+
+    mapPins.forEach(p => p.classList.remove('active'));
+    pin.classList.add('active');
+
+    popupCard.classList.add('updating');
+    setTimeout(() => {
+      popupImg.src = pin.getAttribute('data-img');
+      popupLoc.textContent = pin.getAttribute('data-loc');
+      popupTitle.textContent = pin.getAttribute('data-title');
+      popupDesc.textContent = pin.getAttribute('data-desc');
+      popupCard.classList.remove('updating');
+    }, 140);
+  }
+
+  mapPins.forEach(pin => {
+    // 電腦版：滑鼠移到氣爆點即切換彈出照片
+    pin.addEventListener('mouseenter', () => activateMapPin(pin));
+    // 手機與平板版：點擊氣爆點切換下方照片卡片
+    pin.addEventListener('click', () => activateMapPin(pin));
+  });
 });
