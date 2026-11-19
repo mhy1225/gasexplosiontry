@@ -119,24 +119,22 @@
     </div>
   </section>
 
-  <!-- 新增：氣爆相對位置互動地圖（導言結束後） -->
+  <!-- 氣爆相對位置互動地圖（完全貼合報導原文與原圖說） -->
   <section class="map-section" id="disaster-map">
     <div class="container">
       <div class="map-header reveal-up">
-        <span class="chapter-num">MAP // RELATIVE LOCATION</span>
-        <h2>2014.07.31 高雄氣爆影響路網與採訪現場分布</h2>
+        <span class="chapter-num">MAP // REPORT LOCATIONS &amp; ARCHIVE PHOTOS</span>
+        <h2>報導提及之氣爆影響範圍與現場照片</h2>
         <p class="map-hint">
-          <span class="desktop-hint">將滑鼠移至紅色氣爆標記點，檢視第一線採訪與救援影像</span>
-          <span class="mobile-hint">點擊地圖上的紅色氣爆標記點，檢視第一線採訪與救援影像</span>
+          <span class="desktop-hint">將滑鼠移至標記點，檢視現場照片與原圖說</span>
+          <span class="mobile-hint">點擊標記點，檢視現場照片與原圖說</span>
         </p>
       </div>
 
       <div class="map-wrapper reveal-up">
-        <!-- 相對位置戰術路網圖 -->
         <div class="tactical-map">
-          <!-- SVG 道路網底圖（三多路、凱旋路、二聖路、一心路相對位置） -->
+          <!-- 僅標示報導原文提及之道路與區域：三多路、凱旋路、一心路一帶與二聖路一帶 -->
           <svg class="road-svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
-            <!-- 網格背景線 -->
             <defs>
               <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
                 <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
@@ -144,27 +142,24 @@
             </defs>
             <rect width="800" height="500" fill="url(#grid)" />
 
-            <!-- 地下石化管線警示光暈 -->
-            <path d="M 120 130 L 430 130 L 470 250 L 510 380 L 140 380" fill="none" stroke="rgba(217, 56, 30, 0.28)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
-
-            <!-- 東西向主幹道：三多一路／二路 -->
+            <!-- 三多路 -->
             <line x1="60" y1="130" x2="740" y2="130" stroke="#3a3a42" stroke-width="14"/>
             <line x1="60" y1="130" x2="740" y2="130" stroke="#78756e" stroke-width="1.5" stroke-dasharray="10,8"/>
-            <text x="85" y="112" fill="#a09d96" font-size="14" font-family="Noto Sans TC">三多一路 / 三多二路</text>
+            <text x="85" y="112" fill="#a09d96" font-size="14" font-family="Noto Sans TC">三多路</text>
 
-            <!-- 東西向幹道：二聖一路 -->
+            <!-- 二聖路一帶 -->
             <line x1="100" y1="255" x2="720" y2="255" stroke="#2e2e35" stroke-width="10"/>
-            <text x="115" y="240" fill="#88857e" font-size="13" font-family="Noto Sans TC">二聖一路</text>
+            <text x="115" y="240" fill="#88857e" font-size="13" font-family="Noto Sans TC">二聖路一帶</text>
 
-            <!-- 東西向主幹道：一心一路 -->
+            <!-- 一心路 -->
             <line x1="80" y1="380" x2="730" y2="380" stroke="#3a3a42" stroke-width="14"/>
             <line x1="80" y1="380" x2="730" y2="380" stroke="#78756e" stroke-width="1.5" stroke-dasharray="10,8"/>
-            <text x="95" y="408" fill="#a09d96" font-size="14" font-family="Noto Sans TC">一心一路</text>
+            <text x="95" y="408" fill="#a09d96" font-size="14" font-family="Noto Sans TC">一心路</text>
 
-            <!-- 南北向核心氣爆軸線：凱旋二路 / 凱旋三路 -->
+            <!-- 凱旋路 -->
             <line x1="415" y1="40" x2="535" y2="460" stroke="#474752" stroke-width="16"/>
             <line x1="415" y1="40" x2="535" y2="460" stroke="#d9381e" stroke-width="2" stroke-dasharray="8,6"/>
-            <text x="548" y="210" fill="#e67e22" font-size="14" font-weight="bold" font-family="Noto Sans TC">凱旋二路・三路（氣爆主軸線）</text>
+            <text x="548" y="210" fill="#e67e22" font-size="14" font-weight="bold" font-family="Noto Sans TC">凱旋路</text>
 
             <!-- 方位標示 -->
             <g transform="translate(730, 55)">
@@ -174,61 +169,61 @@
             </g>
           </svg>
 
-          <!-- 互動熱點 1：三多路・凱旋路口 -->
+          <!-- 標記 1：三多路、凱旋路一帶 -->
           <button type="button" class="map-pin active" style="top: 26%; left: 54%;"
             data-img="photo1.jpg"
-            data-loc="01 // 三多路・凱旋路口"
-            data-title="路面炸裂隆起與採訪連線起點"
-            data-desc="管線爆炸衝擊力將柏油路炸得隆起扭曲，路燈與紅綠燈倒塌，李珮瑄與團隊手腳並用爬過凹凸不平的路面進行連線。">
+            data-loc="報導提及：三多路、凱旋路一帶"
+            data-title="圖／宋德威提供"
+            data-desc="氣爆將整條馬路炸得面目全非，路燈、紅綠燈倒塌，民眾聚集在路邊。">
             <span class="pin-pulse"></span>
             <span class="pin-dot"></span>
-            <span class="pin-label">三多・凱旋路口</span>
+            <span class="pin-label">三多路・凱旋路一帶</span>
           </button>
 
-          <!-- 互動熱點 2：二聖路・凱旋路口 -->
+          <!-- 標記 2：二聖路一帶 -->
           <button type="button" class="map-pin" style="top: 51%; left: 59%;"
             data-img="photo2.jpg"
-            data-loc="02 // 二聖路・凱旋路一帶"
-            data-title="搜救犬與消防隊員挺進瓦礫"
-            data-desc="宋德威先在對面婦產科診所協助抱出十多名嬰兒，隨後前往災情慘重的二聖路一帶，目睹消防隊員與搜救犬在坍塌路面展開搜救。">
+            data-loc="報導提及：二聖路一帶"
+            data-title="圖／宋德威提供"
+            data-desc="消防隊員與搜救犬不畏危險，穿梭在氣爆坍塌的馬路上，展開救援重建工作。">
             <span class="pin-pulse"></span>
             <span class="pin-dot"></span>
-            <span class="pin-label">二聖・凱旋路口</span>
+            <span class="pin-label">二聖路一帶</span>
           </button>
 
-          <!-- 互動熱點 3：凱旋路深溝天坑段 -->
+          <!-- 標記 3：凱旋路、三多路與一心路一帶 -->
           <button type="button" class="map-pin" style="top: 63%; left: 62%;"
             data-img="photo3.jpg"
-            data-loc="03 // 凱旋三路塌陷深溝"
-            data-title="救援消防車墜入氣爆天坑"
-            data-desc="地下丙烯連環引爆炸出數公尺深的壕溝天坑，第一時間趕抵現場灌救的消防車也隨路面坍塌掉入坑中。">
+            data-loc="報導提及：凱旋路、三多路與一心路一帶"
+            data-title="圖／宋德威提供"
+            data-desc="救援用消防車也掉進氣爆造成的天坑中。">
             <span class="pin-pulse"></span>
             <span class="pin-dot"></span>
-            <span class="pin-label">凱旋路天坑段</span>
+            <span class="pin-label">凱旋路・一心路一帶</span>
           </button>
 
-          <!-- 互動熱點 4：一心路・凱旋路口 -->
+          <!-- 標記 4：凱旋路、三多路與一心路一帶 -->
           <button type="button" class="map-pin" style="top: 76%; left: 64%;"
             data-img="photo4.jpg"
-            data-loc="04 // 一心路・凱旋路口"
-            data-title="碎石瓦礫間的救援與鏡頭見證"
-            data-desc="氣爆後路面布滿碎石，救援人員架起梯子穿梭搶救，新聞攝影記者扛著攝影機在第一線為社會留存歷史見證。">
+            data-loc="報導提及：凱旋路、三多路與一心路一帶"
+            data-title="圖／李珮瑄提供"
+            data-desc="氣爆後的地上布滿碎石，救援人員爬上梯子，而記者拿著攝影機，為社會大眾見證重要時刻。">
             <span class="pin-pulse"></span>
             <span class="pin-dot"></span>
-            <span class="pin-label">一心・凱旋路口</span>
+            <span class="pin-label">現場採訪與救援見證</span>
           </button>
 
-          <!-- 彈出照片資訊卡（電腦版浮動在右側／手機版自動變為下方固定卡片） -->
+          <!-- 彈出照片資訊卡 -->
           <div class="map-popup-card" id="mapPopupCard">
             <div class="popup-header">
-              <span id="popupLoc">01 // 三多路・凱旋路口</span>
+              <span id="popupLoc">報導提及：三多路、凱旋路一帶</span>
               <span class="popup-live">ARCHIVE PHOTO</span>
             </div>
             <div class="popup-img-box">
-              <img id="popupImg" src="photo1.jpg" alt="高雄氣爆現場照片" />
+              <img id="popupImg" src="photo1.jpg" alt="氣爆將整條馬路炸得面目全非，路燈、紅綠燈倒塌，民眾聚集在路邊。" />
             </div>
-            <h3 id="popupTitle">路面炸裂隆起與採訪連線起點</h3>
-            <p id="popupDesc">管線爆炸衝擊力將柏油路炸得隆起扭曲，路燈與紅綠燈倒塌，李珮瑄與團隊手腳並用爬過凹凸不平的路面進行連線。</p>
+            <h3 id="popupTitle">圖／宋德威提供</h3>
+            <p id="popupDesc">氣爆將整條馬路炸得面目全非，路燈、紅綠燈倒塌，民眾聚集在路邊。</p>
           </div>
         </div>
       </div>
