@@ -176,34 +176,104 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   animateParticles();
-  // 6. 氣爆相對位置地圖：滑鼠移入（桌機）與點擊（手機）切換現場照片
-  const mapPins = document.querySelectorAll('.map-pin');
-  const popupCard = document.getElementById('mapPopupCard');
-  const popupImg = document.getElementById('popupImg');
-  const popupLoc = document.getElementById('popupLoc');
-  const popupTitle = document.getElementById('popupTitle');
-  const popupDesc = document.getElementById('popupDesc');
+  // 6. 可縮放與拖曳平移的高雄氣爆影響範圍地圖
+  const panStage = document.getElementById('mapPanStage');
+  const realScaleSvg = document.getElementById('realScaleSvg');
+  const zoomInBtn = document.getElementById('zoomInBtn');
+  const zoomOutBtn = document.getElementById('zoomOutBtn');
+  const zoomResetBtn = document.getElementById('zoomResetBtn');
+  const zoomReadout = document.getElementById('zoomReadout');
 
-  function activateMapPin(pin) {
-    if (!popupCard || pin.classList.contains('active')) return;
+  if (panStage && realScaleSvg) {
+    let scale = 1;
+    let translateX = 0;
+    let translateY = 0;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
 
-    mapPins.forEach(p => p.classList.remove('active'));
-    pin.classList.add('active');
+    const MIN_SCALE = 0.75;
+    const MAX_SCALE = 3.5;
 
-    popupCard.classList.add('updating');
-    setTimeout(() => {
-      popupImg.src = pin.getAttribute('data-img');
-      popupLoc.textContent = pin.getAttribute('data-loc');
-      popupTitle.textContent = pin.getAttribute('data-title');
-      popupDesc.textContent = pin.getAttribute('data-desc');
-      popupCard.classList.remove('updating');
-    }, 140);
+    function applyTransform() {
+      realScaleSvg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+      if (zoomReadout) {
+        zoomReadout.textContent = `${Math.round(scale * 100)}%`;
+      }
+    }
+
+    function setZoom(nextScale) {
+      scale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, nextScale));
+      if (scale === 1) {
+        translateX = 0;
+        translateY = 0;
+      }
+      applyTransform();
+    }
+
+    zoomInBtn?.addEventListener('click', () => setZoom(scale + 0.25));
+    zoomOutBtn?.addEventListener('click', () => setZoom(scale - 0.25));
+    zoomResetBtn?.addEventListener('click', () => {
+      scale = 1;
+      translateX = 0;
+      translateY = 0;
+      applyTransform();
+    });
+
+    // 滑鼠滾輪縮放
+    panStage.addEventListener(
+      'wheel',
+      (e) => {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 0.18 : -0.18;
+        setZoom(scale + delta);
+      },
+      { passive: false }
+    );
+
+    // 滑鼠按住拖曳
+    panStage.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.clientX - translateX;
+      startY = e.clientY - translateY;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      translateX = e.clientX - startX;
+      translateY = e.clientY - startY;
+      applyTransform();
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    // 觸控裝置單指拖曳
+    panStage.addEventListener(
+      'touchstart',
+      (e) => {
+        if (e.touches.length === 1) {
+          isDragging = true;
+          startX = e.touches[0].clientX - translateX;
+          startY = e.touches[0].clientY - translateY;
+        }
+      },
+      { passive: true }
+    );
+
+    panStage.addEventListener(
+      'touchmove',
+      (e) => {
+        if (!isDragging || e.touches.length !== 1) return;
+        translateX = e.touches[0].clientX - startX;
+        translateY = e.touches[0].clientY - startY;
+        applyTransform();
+      },
+      { passive: true }
+    );
+
+    panStage.addEventListener('touchend', () => {
+      isDragging = false;
+    });
   }
-
-  mapPins.forEach(pin => {
-    // 電腦版：滑鼠移到氣爆點即切換彈出照片
-    pin.addEventListener('mouseenter', () => activateMapPin(pin));
-    // 手機與平板版：點擊氣爆點切換下方照片卡片
-    pin.addEventListener('click', () => activateMapPin(pin));
-  });
-});
