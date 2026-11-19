@@ -97,39 +97,60 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', revealVisibleElements, { passive: true });
   revealVisibleElements();
 
-  // 4. 災難傷亡數據滾動計數動畫
+ // 4. 災難傷亡數據滾動計數動畫（含滾動保底，確保 32 人與 321 人必定顯示）
   const counters = document.querySelectorAll('.counter');
-  const counterObserver = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const target = parseInt(el.getAttribute('data-target'), 10);
-          const duration = 1400;
-          const startTime = performance.now();
+  const animatedCounters = new WeakSet();
 
-          const updateCounter = (now) => {
-            const elapsed = now - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const easeOut = 1 - Math.pow(1 - progress, 3);
-            el.textContent = Math.floor(easeOut * target);
+  function runCounter(el) {
+    if (animatedCounters.has(el)) return;
+    animatedCounters.add(el);
 
-            if (progress < 1) {
-              requestAnimationFrame(updateCounter);
-            } else {
-              el.textContent = target;
-            }
-          };
+    const target = parseInt(el.getAttribute('data-target'), 10) || 0;
+    const duration = 1000;
+    const startTime = performance.now();
 
-          requestAnimationFrame(updateCounter);
-          observer.unobserve(el);
-        }
-      });
-    },
-    { threshold: 0.5 }
-  );
+    const updateCounter = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(easeOut * target);
 
-  counters.forEach((counter) => counterObserver.observe(counter));
+      if (progress < 1) {
+        requestAnimationFrame(updateCounter);
+      } else {
+        el.textContent = target;
+      }
+    };
+
+    requestAnimationFrame(updateCounter);
+  }
+
+  function checkCountersInView() {
+    counters.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 1.05 && rect.bottom > -50) {
+        runCounter(el);
+      }
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    const counterObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting || entry.boundingClientRect.top < window.innerHeight) {
+            runCounter(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.01 }
+    );
+    counters.forEach((counter) => counterObserver.observe(counter));
+  }
+
+  window.addEventListener('scroll', checkCountersInView, { passive: true });
+  checkCountersInView();
 
   // 5. 背景災難灰燼與火花粒子特效 (HTML5 Canvas)
   const canvas = document.getElementById('emberCanvas');
