@@ -621,11 +621,11 @@ figcaption {
   margin-top: 1.2rem;
 }
 
-/* 進場動畫 */
+/* 進場動畫：改為更靈敏且不卡在全黑狀態 */
 .reveal-up {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(18px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
 }
 
 .reveal-up.visible {
