@@ -60,21 +60,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
   stepCards.forEach((card) => stepObserver.observe(card));
 
-  // 3. 進場淡入動畫 (Reveal on Scroll)
+  // 3. 進場淡入動畫 (Reveal on Scroll + 滾動保底顯示)
   const revealElements = document.querySelectorAll('.reveal-up');
-  const revealObserver = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.15 }
-  );
 
-  revealElements.forEach((el) => revealObserver.observe(el));
+  function revealVisibleElements() {
+    const triggerBottom = window.innerHeight * 0.98;
+    revealElements.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= triggerBottom) {
+        el.classList.add('visible');
+      }
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting || entry.boundingClientRect.top < window.innerHeight) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: '0px 0px 80px 0px',
+        threshold: 0.01
+      }
+    );
+
+    revealElements.forEach((el) => revealObserver.observe(el));
+  }
+
+  window.addEventListener('scroll', revealVisibleElements, { passive: true });
+  window.addEventListener('resize', revealVisibleElements, { passive: true });
+  revealVisibleElements();
 
   // 4. 災難傷亡數據滾動計數動畫
   const counters = document.querySelectorAll('.counter');
