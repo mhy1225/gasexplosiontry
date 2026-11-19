@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>從進入現場到出走離場：災難新聞工作者的情緒勞動與創傷見證</title>
+  <!-- 引入思源宋體與思源黑體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- 頂部閱讀進度條 -->
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- 頂部導覽列 -->
+  <header class="site-header">
+    <div class="header-tag">
+      <span class="rec-dot"></span> 2014.07.31 高雄氣爆紀實專題 <!-- -->
+    </div>
+    <nav class="chapter-nav">
+      <a href="#intro" class="nav-link active">00 進入現場</a>
+      <a href="#chapter1" class="nav-link">01 拼湊原貌</a>
+      <a href="#chapter2" class="nav-link">02 同理與底線</a>
+      <a href="#chapter3" class="nav-link">03 創傷與前行</a>
+    </nav>
+  </header>
+
+  <!-- 背景動態灰燼粒子 Canvas 與寫實噪點層 -->
+  <canvas id="emberCanvas"></canvas>
+  <div class="noise-overlay"></div>
+
+  <!-- 首屏英雄區：寫實分格視覺 -->
+  <section class="hero-section" id="intro">
+    <div class="hero-grid-panels">
+      <div class="bg-panel panel-1" style="background-image: url('photo1.jpg');"></div>
+      <div class="bg-panel panel-2" style="background-image: url('photo2.jpg');"></div>
+      <div class="bg-panel panel-3" style="background-image: url('photo3.jpg');"></div>
+      <div class="bg-panel panel-4" style="background-image: url('photo4.jpg');"></div>
+    </div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <div class="viewfinder-frame">
+        <span class="corner tl"></span>
+        <span class="corner tr"></span>
+        <span class="corner bl"></span>
+        <span class="corner br"></span>
+        <p class="hero-kicker">DISASTER JOURNALISM &amp; TRAUMA WITNESS</p>
+        <h1 class="hero-title">從進入現場到出走離場</h1> <!--[cite: 1] -->
+        <h2 class="hero-subtitle">災難新聞工作者的情緒勞動與創傷見證<br>——以2014高雄氣爆報導經驗為例</h2> <!--[cite: 1] -->
+        <div class="scroll-indicator">
+          <span>向下滾動進入現場</span>
+          <div class="scroll-line"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 序幕：午夜氣爆與數據分格 -->
+  <section class="prologue-section">
+    <div class="container">
+      <!-- 寫實漫畫／紀錄片分格引言 -->
+      <div class="comic-panel-row">
+        <div class="comic-panel panel-quote reveal-up">
+          <div class="panel-meta">LOC: 高雄三多路・凱旋路 / 現場連線</div> <!--[cite: 1] -->
+          <blockquote>
+            「整條路被炸得面目全非，我們就手腳並用地爬過凹凸不平的柏油路。」 <!--[cite: 1] -->
+          </blockquote>
+          <cite>—— 中天電視記者 李珮瑄</cite> <!--[cite: 1] -->
+        </div>
+
+        <div class="comic-panel panel-narrative reveal-up">
+          <p>
+            濃郁的瓦斯氣味瀰漫在高雄三多路、凱旋路一帶，路面連綿起伏，管線爆炸的衝擊力將柏油路炸得隆起扭曲，一片突兀的小丘陵在眼前漫開，曾經在2014高雄氣爆現場連線採訪的中天電視記者李珮瑄，餘悸猶存地說到，「整條路被炸得面目全非，我們就手腳並用地爬過凹凸不平的柏油路。」 <!--[cite: 1] -->
+          </p>
+        </div>
+      </div>
+
+      <!-- 災難傷亡數據分格 -->
+      <div class="stats-grid reveal-up">
+        <div class="stat-panel">
+          <span class="stat-label">氣爆發生時間</span>
+          <div class="stat-value">2014.07.31</div> <!--[cite: 1] -->
+          <span class="stat-desc">晚間通報外洩，接近午夜丙烯連環引爆</span> <!--[cite: 1] -->
+        </div>
+        <div class="stat-panel alert">
+          <span class="stat-label">不幸罹難人數</span>
+          <div class="stat-value"><span class="counter" data-target="32">0</span> <small>人</small></div> <!--[cite: 1] -->
+          <span class="stat-desc">包含 7 名現場救援罹難的警義消人員</span> <!--[cite: 1] -->
+        </div>
+        <div class="stat-panel">
+          <span class="stat-label">輕重傷人數</span>
+          <div class="stat-value"><span class="counter" data-target="321">0</span> <small>人</small></div> <!--[cite: 1] -->
+          <span class="stat-desc">波及凱旋路、三多路、一心路與二聖路一帶</span> <!--[cite: 1] -->
+        </div>
+      </div>
+
+      <div class="prose-box reveal-up">
+        <p>
+          穿越時空迴廊，2014年7月31日晚間，高雄市消防局接獲通報，前鎮區疑似發生大範圍氣體外洩，接近午夜時分，沿著地下石化管線擴散的丙烯氣體陸續引發爆炸，人孔蓋被炸飛，火光竄過凱旋路、三多路與一心路一帶，車輛翻覆，店家住戶均遭受嚴重波及，這場臺灣歷史上最嚴重的氣爆事故後造成32人死亡、321人輕重傷，其中更包括七名在現場救援時不幸罹難的警義消人員。當年奔走在第一線的記者們，就在這滿目瘡痍的街道上，來回穿梭於驚惶人群與坍塌樓房之間，蒐集現場資訊，訪談倖存者，試圖拼湊出這場災難發生的始末，努力將現場的真相傳遞給彼時遠在災區外等待消息的人們。 <!--[cite: 1] -->
+        </p>
+      </div>
+
+      <!-- 第一張全幅寫實分格圖 -->
+      <figure class="full-panel-figure reveal-up">
+        <div class="panel-frame">
+          <span class="frame-tag">ARCHIVE // 01</span>
+          <img src="photo1.jpg" alt="氣爆將整條馬路炸得面目全非，路燈、紅綠燈倒塌，民眾聚集在路邊。" /> <!--[cite: 1] -->
+        </div>
+        <figcaption>
+          氣爆將整條馬路炸得面目全非，路燈、紅綠燈倒塌，民眾聚集在路邊。圖／宋德威提供 <!--[cite: 1] -->
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 第一章：Scrollytelling 雙欄滾動區 -->
+  <section class="scrolly-section" id="chapter1">
+    <div class="chapter-banner">
+      <span class="chapter-num">CHAPTER 01</span>
+      <h2>經驗、人脈與直覺 逐漸拼湊出災難原貌</h2> <!--[cite: 1] -->
+    </div>
+
+    <div class="scrolly-container">
+      <!-- 左側固定寫實分格視覺 -->
+      <div class="sticky-visual">
+        <div class="visual-stage" id="stage-ch1">
+          <!-- 動態切換分格卡 1-A -->
+          <div class="stage-card active" data-step="ch1-1">
+            <div class="split-frame">
+              <div class="frame-header">
+                <span>PANEL 01-A // 佈線分工網</span>
+                <span>記者 周寬展</span> <!--[cite: 1] -->
+              </div>
+              <div class="network-diagram">
+                <div class="node-box">
+                  <strong>社會線記者</strong>
+                  <p>與警消熟稔，第一線掌握救援進度與支援程度</p> <!--[cite: 1] -->
+                </div>
+                <div class="node-box">
+                  <strong>生活線記者</strong>
+                  <p>具醫生、專家學者人脈，至醫院追蹤後續救治</p> <!--[cite: 1] -->
+                </div>
+                <div class="node-box">
+                  <strong>黨政線記者</strong>
+                  <p>進入各部會了解政府應變與檢討制度進展</p> <!--[cite: 1] -->
+                </div>
+              </div>
+              <blockquote class="stage-quote">
+                「長期跑線就會跟警消他們比較熟，電話中也可以透過了解警消支援醫院的程度，來掌握災情。」 <!--[cite: 1] -->
+              </blockquote>
+            </div>
+          </div>
+
+          <!-- 動態切換分格卡 1-B -->
+          <div class="stage-card" data-step="ch1-2">
+            <div class="split-frame">
+              <div class="frame-header">
+                <span>PANEL 01-B // 婦產科救援與二聖路現場</span>
+                <span>記者 宋德威</span> <!--[cite: 1] -->
+              </div>
+              <div class="panel-image-wrap">
+                <img src="photo2.jpg" alt="消防隊員與搜救犬不畏危險，穿梭在氣爆坍塌的馬路上，展開救援重建工作。" /> <!--[cite: 1] -->
+              </div>
+              <p class="stage-caption">
+                消防隊員與搜救犬不畏危險，穿梭在氣爆坍塌的馬路上，展開救援重建工作。圖／宋德威提供 <!--[cite: 1] -->
+              </p>
+            </div>
+          </div>
+
+          <!-- 動態切換分格卡 1-C -->
+          <div class="stage-card" data-step="ch1-3">
+            <div class="split-frame">
+              <div class="frame-header">
+                <span>PANEL 01-C // 空杯心態與同理視角</span>
+                <span>記者 宋德威</span> <!--[cite: 1] -->
+              </div>
+              <div class="quote-highlight-panel">
+                <p class="metaphor-tag">情緒如同一杯水</p> <!--[cite: 1] -->
+                <blockquote>
+                  「如果沒有把杯子裡的水倒掉，你是沒辦法再裝水進去的。」 <!--[cite: 1] -->
+                </blockquote>
+                <div class="sub-quote">
+                  採訪小朋友時：「蹲下來，用跟他一樣高的角度去對話。」 <!--[cite: 1] -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右側滾動文字卡片 -->
+      <div class="scrolly-steps">
+        <article class="step-card" data-target="ch1-1">
+          <div class="step-badge">01 / 混亂中的第一版事實</div>
+          <p>
+            記者們循線去到災區時，石化氣體仍持續沿著市區雨水下水道系統擴散，隨時有著再次爆炸的風險；而位於人口密集住商混合區的災難現場，更四處都是傷亡景象。初來乍到的記者們，是如何在混亂中迅速建立出第一版事實的呢？具備近15年社會線記者經驗的周寬展，娓娓道來佈線幕後的分工合作，「長期跑線就會跟警消他們比較熟，電話中也可以透過了解警消支援醫院的程度，來掌握災情。」 <!--[cite: 1] -->
+          </p>
+          <p>
+            他也談到過往在通訊軟體未普及前，記者間多是藉由通話來互相更新現場狀況，一個閃神可能的確會錯漏重要資訊，但隨著彼此的交流網漸趨穩固，長官蒐集回報後便可迅速安排不同線路記者各司其職，與警消熟捻的社會線記者便在第一線掌握救援進度，生活線記者因具備醫生、專家學者人脈而多安排至醫院追蹤後續救治情況，黨政線記者則進入各部會了解政府應變與檢討制度的進展。周寬展說，「這樣一來速度可以提升很多。」 <!--[cite: 1] -->
+          </p>
+        </article>
+
+        <article class="step-card" data-target="ch1-2">
+          <div class="step-badge">02 / 搶救嬰兒與目睹學生罹難</div>
+          <p>
+            更有記者善用過往處理突發事件的經驗，在混亂現場迅速判斷可能被忽略的災情。具備眾多突發新聞採訪經驗且對高雄在地環境十分熟悉、現於年代新聞任職的宋德威回憶，爆炸地點的對面街口有間平日人潮絡繹不絕的婦產科診所，想起裡頭可能還有孕婦與剛出生的嬰兒，他便立刻聯絡熟識記者進行救援，「小嬰兒很輕，我們一手抓一個，趕快抱了十幾個出來。」 <!--[cite: 1] -->
+          </p>
+          <p>
+            救援任務告一段落後，他又從熟識消防隊員口中得知二聖路一帶災情嚴重，便旋即前往現場，宋德威回想當時慘狀仍歷歷在目，「我帶著手電筒往路上一照，就看見有幾乎一噸重的水泥塊壓在了罹難者的身上，」他確認死者身上物品後發現有消防局標誌，發現對方即是自己曾經的學生，如今卻已面目全非。 <!--[cite: 1] -->
+          </p>
+        </article>
+
+        <article class="step-card" data-target="ch1-3">
+          <div class="step-badge">03 / 把杯子裡的水倒掉</div>
+          <p>
+            親眼看見被柏油塊重壓住的弟兄，宋德威說自己的眼淚立刻就流了下來，「我就哭喊著要他把手鬆開，我們才能夠救他，」經歷過這樣的場面，他並沒有變得麻木冷血，反而是能夠抱持著空杯心態活在當下，警惕自己以同理心去看待大小事件，他將情緒比喻為一杯水，「如果沒有把杯子裡的水倒掉，你是沒辦法再裝水進去的。」 <!--[cite: 1] -->
+          </p>
+          <p>
+            適時清理鬱積在心頭的情緒，變相給予他敢於接觸新鮮事物的能量，也讓他能更敏銳地洞察細節，理解受訪者的處境，而讓報導除卻還原事件外，還能真實貼近事件中人物的身與心。舉例而言，若採訪對象是小朋友，他一定會放下身段，「蹲下來，用跟他一樣高的角度去對話。」 <!--[cite: 1] -->
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第二章：氣爆現場的鏡頭外 如何守住同理與底線 -->
+  <section class="scrolly-section" id="chapter2">
+    <div class="chapter-banner">
+      <span class="chapter-num">CHAPTER 02</span>
+      <h2>氣爆現場的鏡頭外 如何守住同理與底線</h2> <!--[cite: 1] -->
+    </div>
+
+    <div class="scrolly-container reverse-layout">
+      <!-- 左側固定寫實分格視覺 -->
+      <div class="sticky-visual">
+        <div class="visual-stage" id="stage-ch2">
+          <!-- 分格 2-A -->
+          <div class="stage-card active" data-step="ch2-1">
+            <div class="split-frame">
+              <div class="frame-header">
+                <span>PANEL 02-A // 加護病房外的抉擇</span>
+                <span>記者 李珮瑄</span> <!--[cite: 1] -->
+              </div>
+              <div class="storyboard-grid">
+                <div class="mini-panel">
+                  <span class="mini-tag">衝突現場</span>
+                  <p>役男母親痛罵圍堵記者：「你們有沒有人性啊」</p> <!--[cite: 1] -->
+                </div>
+                <div class="mini-panel highlight">
+                  <span class="mini-tag">放下麥克風</span>
+                  <p>「我說我現在沒有在採訪，可是我很想要了解你兒子是誰、他的狀況怎麼樣，我想知道他的故事。」</p> <!--[cite: 1] -->
+                </div>
+                <div class="mini-panel">
+                  <span class="mini-tag">保護受訪者</span>
+                  <p>尊重母親不願露面的意願，改以拍攝手部的方式取代。</p> <!--[cite: 1] -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 分格 2-B -->
+          <div class="stage-card" data-step="ch2-2">
+            <div class="split-frame">
+              <div class="frame-header">
+                <span>PANEL 02-B // 褪去記者身分後的對話</span>
+                <span>換位思考</span>
+              </div>
+              <div class="quote-highlight-panel">
+                <blockquote>
+                  「如果今天是我坐在這邊，我應該會比較想要聽到什麼樣的關心？」 <!--[cite: 1] -->
+                </blockquote>
+                <p class="panel-note">
+                  褪去記者身份，好好地關心眼前這個人，就足以讓對話展開。 <!--[cite: 1] -->
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 分格 2-C -->
+          <div class="stage-card" data-step="ch2-3">
+            <div class="split-frame">
+              <div class="frame-header">
+                <span>PANEL 02-C // 倫理界線與天坑現場</span>
+                <span>拒絕翻找遺物</span> <!--[cite: 1] -->
+              </div>
+              <div class="panel-image-wrap">
+                <img src="photo3.jpg" alt="救援用消防車也掉進氣爆造成的天坑中。" /> <!--[cite: 1] -->
+              </div>
+              <p class="stage-caption">
+                救援用消防車也掉進氣爆造成的天坑中。圖／宋德威提供 <!--[cite: 1] -->
+              </p>
+              <blockquote class="stage-quote compact">
+                「但我覺得人要有底線，這種翻人家遺物的事情我做不到。」—— 李珮瑄 <!--[cite: 1] -->
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右側滾動文字卡片 -->
+      <div class="scrolly-steps">
+        <article class="step-card" data-target="ch2-1">
+          <div class="step-badge">01 / 放下麥克風的傾聽</div>
+          <p>
+            而這份蘊藏在心底的溫柔，也影響著記者們在現場做出的每一個選擇。當年還是生活線記者的李珮瑄，被派至醫院內部蹲守受難者與其家屬，捕捉最新救治情況與相關人的反應，儘管他當時認為這樣的採訪只是為了流量博版面，而百般不願意執行這項任務，但他仍然找到自己的方式，在不消費傷痛的狀態下完成採訪。 <!--[cite: 1] -->
+          </p>
+          <p>
+            他分享現場有位傷勢嚴重、正接受緊急搶救的役男，所有的記者都守在加護病房外圍堵著這位役男的母親，「這個媽媽就痛罵記者說『你們有沒有人性啊』，情緒蠻激烈的。」見到此情此景，李珮瑄選擇了迥異於其他記者的行動，他轉而將麥克風放下，選擇坐到該位母親身邊，在脫口而出滿腹疑問前，先告訴對方自己是誰，「我說我現在沒有在採訪，可是我很想要了解你兒子是誰、他的狀況怎麼樣，我想知道他的故事。」 <!--[cite: 1] -->
+          </p>
+          <p>
+            隨著對方放下防備，談話內容也逐漸觸及該位母親心中深沉的掛念與恐懼，「那位媽媽開始分享自己的兒子只是臨時被派去支援，為什麼會變成這樣？」眼前的傷者逐漸不再只有刻板的受難標籤，而是長成了有血有肉的人物，李珮瑄也因此深受觸動，「我聽了這故事後非常難過，也很想替他集氣。」最後，他也尊重母親不願露面的意願，改以拍攝手部的方式取代，讓他能在保護身分的前提下，說出氣爆後的心路歷程。 <!--[cite: 1] -->
+          </p>
+        </article>
+
+        <article class="step-card" data-target="ch2-2">
+          <div class="step-badge">02 / 捫心自問的同理心</div>
+          <p>
+            放下麥克風後，李珮瑄反而聽見了受訪者真誠的心底話，他認為自己之所以能夠獲得該位母親的信賴，重點在於他總是願意先捫心自問，「如果今天是我坐在這邊，我應該會比較想要聽到什麼樣的關心？」她後來發現，很多時候答案並不複雜，只不過是褪去記者身份，好好地關心眼前這個人，就足以讓對話展開。 <!--[cite: 1] -->
+          </p>
+        </article>
+
+        <article class="step-card" data-target="ch2-3">
+          <div class="step-badge">03 / 罹難者遺物與報導倫理底線</div>
+          <p>
+            踏入新聞工作後歷經超過百場採訪現場的宋德威，則更加深刻體會到記者手中的權力與責任，「當我有這樣子的力量時，要怎麼樣在力所能及處幫助他人？」鏡頭所能抵達之處，不只是被遮蔽的真相，也可能有著他人不願再次被觸碰的傷口，李珮瑄當初在現場偶然接觸一則關於氣爆罹難者遺物的新聞，也令他在心中再三叩問著新聞報導的倫理界線：有台停靠路邊的機車，其車主疑似在氣爆瞬間遭爆炸衝擊而罹難，由於機車置物箱意外敞開，裡頭散落出名片等個人物品，其餘平面記者據此追查出死者是一名房仲，並據此發展為新聞，李珮瑄所在的電視台主管，便也要求他進一步尋找相關素材，「但我覺得人要有底線，這種翻人家遺物的事情我做不到。」 <!--[cite: 1] -->
+          </p>
+          <p>
+            他點出，記者固然有還原現實的義務，可是當追索真相的腳步涉及了罹難者的私領域，是否還有權利去替一個已然無法為自己發聲的人，決定他死後留下的痕跡要不要被看見？經過一番心理掙扎，後來李珮瑄決定改以動畫模擬的方式完成報導，試圖找到平衡的節點。 <!--[cite: 1] -->
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第三章：穿越重重土堆瓦礫 記者仍向下一個現場前進 -->
+  <section class="scrolly-section" id="chapter3">
+    <div class="chapter-banner">
+      <span class="chapter-num">CHAPTER 03</span>
+      <h2>穿越重重土堆瓦礫 記者仍向下一個現場前進</h2> <!--[cite: 1] -->
+    </div>
+
+    <div class="scrolly-container">
+      <!-- 左側固定寫實分格視覺 -->
+      <div class="sticky-visual">
+        <div class="visual-stage" id="stage-ch3">
+          <!-- 分格 3-A -->
+          <div class="stage-card active" data-step="ch3-1">
+            <div class="split-frame">
+              <div class="frame-header">
+                <span>PANEL 03-A // 離場後的創傷後遺症</span>
+                <span>資深記者 趙立（TVBS 服務 27 年）</span> <!--[cite: 1] -->
+              </div>
+              <div class="quote-highlight-panel">
+                <blockquote>
+                  「躺在床上睡覺，眼淚不知道為什麼就一直滴、一直掉。睡醒了，整個枕頭也都濕了。」 <!--[cite: 1] -->
+                </blockquote>
+                <div class="sub-quote">
+                  「數十年來，我都還是用一個新人的心態去跑新聞。」 <!--[cite: 1] -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 分格 3-B -->
+          <div class="stage-card" data-step="ch3-2">
+            <div class="split-frame">
+              <div class="frame-header">
+                <span>PANEL 03-B // 消化職業創傷的解藥</span>
+                <span>將悲傷化為公益動力</span> <!--[cite: 1] -->
+              </div>
+              <div class="quote-highlight-panel">
+                <p class="metaphor-tag">扮演聖誕老人與蝙蝠俠送暖</p> <!--[cite: 1] -->
+                <blockquote>
+                  「我想要用記者的視野與感受，讓這片土地變得更溫暖。」 <!--[cite: 1] -->
+                </blockquote>
+                <p class="panel-note">
+                  深入醫院、育幼院與養護中心，主動造訪派出所與消防隊為第一線人員加油打氣。 <!--[cite: 1] -->
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 分格 3-C -->
+          <div class="stage-card" data-step="ch3-3">
+            <div class="split-frame">
+              <div class="frame-header">
+                <span>PANEL 03-C // 為土地留存最真誠的見證</span>
+                <span>現場紀錄者</span> <!--[cite: 1] -->
+              </div>
+              <div class="panel-image-wrap">
+                <img src="photo4.jpg" alt="氣爆後的地上布滿碎石，救援人員爬上梯子，而記者拿著攝影機，為社會大眾見證重要時刻。" /> <!--[cite: 1] -->
+              </div>
+              <p class="stage-caption">
+                氣爆後的地上布滿碎石，救援人員爬上梯子，而記者拿著攝影機，為社會大眾見證重要時刻。圖／李珮瑄提供 <!--[cite: 1] -->
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右側滾動文字卡片 -->
+      <div class="scrolly-steps">
+        <article class="step-card" data-target="ch3-1">
+          <div class="step-badge">01 / 濕透的枕頭與新聞使命</div>
+          <p>
+            在災難現場首當其衝的記者們，也往往得承受目睹重大傷亡所帶來的情緒衝擊，因此如何在情感投入與新聞專業判斷之間取得平衡，便成為他們必須面對的課題。在TVBS服務27年的資深記者趙立，在高雄氣爆的採訪告一段落後，累積許久的悲傷才慢慢浮現，「躺在床上睡覺，眼淚不知道為什麼就一直滴、一直掉。睡醒了，整個枕頭也都濕了。」他想不透這麼大的災難，怎麼會發生在自己的生活圈當中，記憶中的災難場景仍在他腦海中反覆重播，甚至連採訪美食新聞時，他都會忍不住紅了眼眶，這樣的狀態持續了約一個月，他才慢慢走出低潮。 <!--[cite: 1] -->
+          </p>
+          <p>
+            面臨這類的現場創傷，趙立說道：「記者們通常都要靠自己調適壓力，抗壓性不夠很難在媒體生存。」但對趙立而言，這並非停下腳步的理由，他因對新聞有濃厚喜愛而仍樂此不疲，「數十年來，我都還是用一個新人的心態去跑新聞。」他的熱情體現在願意不顧生命危險，冒著大雨抵達土石崩落現場，在極限的時間內採訪目擊者並將關鍵畫面剪接播出，就是為了讓大家知道危險、做防堵補救，他認為這正是新聞工作者的使命。 <!--[cite: 1] -->
+          </p>
+        </article>
+
+        <article class="step-card" data-target="ch3-2">
+          <div class="step-badge">02 / 讓這片土地變得更溫暖</div>
+          <p>
+            長期暴露於重大災難與慘案現場，帶給記者深重的心理創傷，卻反而驅使他們建立獨特的調適機制，趙立展現出極強的情緒韌性，將悲傷全數化為前進的動力，二十多年來他持續投身公益，不僅扮演聖誕老人或蝙蝠俠深入醫院、育幼院與養護中心送暖，更經常主動造訪派出所與消防隊為第一線人員加油打氣，「我想要用記者的視野與感受，讓這片土地變得更溫暖。」這是他消化職業創傷的解藥，也是一路以來未曾間斷的堅持。 <!--[cite: 1] -->
+          </p>
+        </article>
+
+        <article class="step-card" data-target="ch3-3">
+          <div class="step-badge">03 / 保存現場記憶的信念</div>
+          <p>
+            「我五歲就會拍照，六歲就會洗暗房，父親常告訴我該如何藉由自己的專長回報社會。」從災難現場回望數十年的新聞職涯，宋德威扛起相機，穿梭在無數個災難現場，傳遞第一線消息給社會大眾。除了宋德威，台灣還有無數個默默付出的新聞工作者，帶著同理心及堅定保存現場記憶的信念，為這片土地紀錄下每個歷史性的災難瞬間，也留存了最真誠的見證。 <!--[cite: 1] -->
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 頁尾 -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-panel">
+        <h3>從進入現場到出走離場：災難新聞工作者的情緒勞動與創傷見證</h3> <!--[cite: 1] -->
+        <p>以2014高雄氣爆報導經驗為例｜受訪者：李珮瑄、周寬展、宋德威、趙立｜影像提供：宋德威、李珮瑄</p> <!--[cite: 1] -->
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
