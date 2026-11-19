@@ -119,21 +119,21 @@
     </div>
   </section>
 
-<!-- 氣爆影響範圍可縮放地圖（真實地理比例與相對位置，不含未經證實之照片與路口配對） -->
+<!-- 氣爆影響範圍可縮放地圖（1 單位 = 真實 1 公尺等比例座標系） -->
   <section class="map-section" id="disaster-map">
     <div class="container">
       <div class="map-header reveal-up">
-        <span class="chapter-num">MAP // REAL-SCALE ZOOMABLE VIEW</span>
+        <span class="chapter-num">MAP // 1:1 METER-SCALED VECTOR VIEW</span>
         <h2>報導提及之氣爆影響範圍（真實地理比例）</h2>
         <p class="map-hint">
-          <span class="desktop-hint">可使用右上角「＋ / － / 重置」或滑鼠滾輪縮放、按住拖曳地圖，檢視報導提及之路段相對位置</span>
-          <span class="mobile-hint">可使用右上角「＋ / － / 重置」縮放，或單指拖曳地圖檢視路段相對位置</span>
+          <span class="desktop-hint">點擊右上角「＋ / － / 重設」或使用滑鼠滾輪縮放、按住拖曳地圖</span>
+          <span class="mobile-hint">點擊右上角「＋ / － / 重設」縮放，或單指拖曳地圖</span>
         </p>
       </div>
 
       <div class="map-wrapper reveal-up">
         <div class="tactical-map" id="zoomableMapContainer">
-          <!-- 地圖縮放與拖曳控制列 -->
+          <!-- 縮放控制列 -->
           <div class="map-controls" aria-label="地圖縮放控制">
             <button type="button" class="map-ctrl-btn" id="zoomInBtn" title="放大">＋</button>
             <span class="map-zoom-readout" id="zoomReadout">100%</span>
@@ -141,90 +141,82 @@
             <button type="button" class="map-ctrl-btn reset-btn" id="zoomResetBtn" title="重設視角">重設</button>
           </div>
 
-          <!-- 左下角真實比例尺標示（以 1000 單位 ≈ 1000 公尺比例繪製） -->
+          <!-- 左下角真實比例尺標示（viewBox 1 單位 = 1 公尺，三多路至一心路南北約 1,350 公尺） -->
           <div class="map-scale-bar">
             <div class="scale-line"></div>
-            <span>真實比例參考：約 500 公尺（南北幹道間距約 650–700m）</span>
+            <span>等比例尺：每格 200 公尺（三多—二聖—一心南北各約 675m）</span>
           </div>
 
-          <!-- 可縮放與平移的 SVG 真實比例路網圖（viewBox 1000 x 1000，1 單位 ≈ 1 公尺） -->
+          <!-- 可縮放與拖曳舞台 -->
           <div class="map-pan-stage" id="mapPanStage">
-            <svg class="road-svg" id="realScaleSvg" viewBox="0 0 1000 1000" width="1000" height="1000">
+            <svg class="road-svg" id="realScaleSvg" viewBox="0 0 2000 2000" preserveAspectRatio="xMidYMid meet">
               <defs>
-                <!-- 100 單位（約 100 公尺）網格 -->
-                <pattern id="realGrid100" width="100" height="100" patternUnits="userSpaceOnUse">
-                  <path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.045)" stroke-width="1"/>
+                <!-- 每 200 單位 = 200 公尺網格 -->
+                <pattern id="meterGrid200" width="200" height="200" patternUnits="userSpaceOnUse">
+                  <path d="M 200 0 L 0 0 0 200" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/>
                 </pattern>
-                <!-- 500 單位（約 500 公尺）主網格 -->
-                <pattern id="realGrid500" width="500" height="500" patternUnits="userSpaceOnUse">
-                  <rect width="500" height="500" fill="url(#realGrid100)"/>
-                  <path d="M 500 0 L 0 0 0 500" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                <!-- 每 600 單位 = 600 公尺主網格 -->
+                <pattern id="meterGrid600" width="600" height="600" patternUnits="userSpaceOnUse">
+                  <rect width="600" height="600" fill="url(#meterGrid200)"/>
+                  <path d="M 600 0 L 0 0 0 600" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="3"/>
                 </pattern>
               </defs>
 
-              <!-- 底圖網格 -->
-              <rect x="0" y="0" width="1000" height="1000" fill="#101015"/>
-              <rect x="0" y="0" width="1000" height="1000" fill="url(#realGrid500)"/>
+              <!-- 固定底色 -->
+              <rect x="0" y="0" width="2000" height="2000" fill="#101015"/>
 
-              <!-- 報導提及之氣爆影響帶狀範圍示意（三多路、凱旋路、一心路與二聖路一帶） -->
-              <g class="report-zone">
-                <!-- 凱旋路南北向影響帶 -->
-                <rect x="572" y="230" width="56" height="630" rx="6" fill="rgba(217, 56, 30, 0.13)" stroke="rgba(217, 56, 30, 0.45)" stroke-width="1.5" stroke-dasharray="8,6"/>
-                <!-- 三多路—一心路北南向主要影響區段 -->
-                <rect x="180" y="275" width="460" height="510" rx="8" fill="rgba(230, 126, 34, 0.05)" stroke="rgba(230, 126, 34, 0.25)" stroke-width="1" stroke-dasharray="6,6"/>
-              </g>
+              <!-- 可縮放平移的向量圖層（以中心 1000, 1000 為基準） -->
+              <g id="mapViewport" transform="translate(0, 0) scale(1)">
+                <rect x="-1000" y="-1000" width="4000" height="4000" fill="url(#meterGrid600)"/>
 
-              <!-- 東西向道路 1：三多路（北側，y = 290） -->
-              <line x1="80" y1="290" x2="920" y2="290" stroke="#3c3c46" stroke-width="14"/>
-              <line x1="80" y1="290" x2="920" y2="290" stroke="#8f8b82" stroke-width="1.5" stroke-dasharray="12,10"/>
-              <text x="95" y="268" fill="#eae6df" font-size="20" font-weight="bold" font-family="Noto Sans TC">三多路（北）</text>
+                <!-- 報導提及之道路範圍示意（以 1 單位 = 1 公尺繪製） -->
+                <!-- 凱旋路（南北向，x = 1200） -->
+                <rect x="1172" y="200" width="56" height="1600" rx="6" fill="rgba(217, 56, 30, 0.12)" stroke="rgba(217, 56, 30, 0.45)" stroke-width="3" stroke-dasharray="14,10"/>
+                <line x1="1200" y1="200" x2="1200" y2="1800" stroke="#525260" stroke-width="22"/>
+                <line x1="1200" y1="200" x2="1200" y2="1800" stroke="#d9381e" stroke-width="4" stroke-dasharray="16,12"/>
+                <text x="1235" y="470" fill="#e67e22" font-size="34" font-weight="bold" font-family="Noto Sans TC">凱旋路（南北向）</text>
 
-              <!-- 東西向道路 2：二聖路一帶（中段，y = 530，距三多路約 240 單位） -->
-              <line x1="80" y1="530" x2="920" y2="530" stroke="#303038" stroke-width="11"/>
-              <text x="95" y="510" fill="#b8b4ac" font-size="18" font-family="Noto Sans TC">二聖路一帶（中）</text>
+                <!-- 三多路（北側，y = 325） -->
+                <line x1="250" y1="325" x2="1750" y2="325" stroke="#3f3f4a" stroke-width="18"/>
+                <line x1="250" y1="325" x2="1750" y2="325" stroke="#969289" stroke-width="2.5" stroke-dasharray="18,14"/>
+                <text x="270" y="295" fill="#eae6df" font-size="34" font-weight="bold" font-family="Noto Sans TC">三多路（北）</text>
 
-              <!-- 東西向道路 3：一心路（南側，y = 770，距二聖路約 240 單位，距三多路約 480 單位） -->
-              <line x1="80" y1="770" x2="920" y2="770" stroke="#3c3c46" stroke-width="14"/>
-              <line x1="80" y1="770" x2="920" y2="770" stroke="#8f8b82" stroke-width="1.5" stroke-dasharray="12,10"/>
-              <text x="95" y="802" fill="#eae6df" font-size="20" font-weight="bold" font-family="Noto Sans TC">一心路（南）</text>
+                <!-- 二聖路一帶（中段，y = 1000，距三多路 675 公尺） -->
+                <line x1="250" y1="1000" x2="1750" y2="1000" stroke="#33333c" stroke-width="14"/>
+                <text x="270" y="972" fill="#b8b4ac" font-size="32" font-family="Noto Sans TC">二聖路一帶（中，距三多路約 675m）</text>
 
-              <!-- 南北向幹道：凱旋路（x = 600） -->
-              <line x1="600" y1="110" x2="600" y2="910" stroke="#4b4b57" stroke-width="18"/>
-              <line x1="600" y1="110" x2="600" y2="910" stroke="#d9381e" stroke-width="2.5" stroke-dasharray="10,8"/>
-              <text x="622" y="175" fill="#e67e22" font-size="20" font-weight="bold" font-family="Noto Sans TC">凱旋路（南北向）</text>
+                <!-- 一心路（南側，y = 1675，距二聖路 675 公尺） -->
+                <line x1="250" y1="1675" x2="1750" y2="1675" stroke="#3f3f4a" stroke-width="18"/>
+                <line x1="250" y1="1675" x2="1750" y2="1675" stroke="#969289" stroke-width="2.5" stroke-dasharray="18,14"/>
+                <text x="270" y="1720" fill="#eae6df" font-size="34" font-weight="bold" font-family="Noto Sans TC">一心路（南，距二聖路約 675m）</text>
 
-              <!-- 區域與路段標記點（僅使用報導原文提及之範圍描述，不虛構照片拍攝點） -->
-              <!-- 標記 A：三多路、凱旋路一帶 -->
-              <g class="svg-marker" transform="translate(600, 290)">
-                <circle r="11" fill="#d9381e" stroke="#ffffff" stroke-width="2.5"/>
-                <rect x="16" y="-17" width="195" height="30" rx="4" fill="rgba(12,12,14,0.9)" stroke="rgba(230,126,34,0.7)"/>
-                <text x="24" y="3" fill="#eae6df" font-size="14" font-family="Noto Sans TC">三多路・凱旋路一帶</text>
-              </g>
+                <!-- 標記點（依真實相對座標定位） -->
+                <g transform="translate(1200, 325)">
+                  <circle r="16" fill="#d9381e" stroke="#ffffff" stroke-width="4"/>
+                  <text x="26" y="10" fill="#eae6df" font-size="28" font-family="Noto Sans TC">三多路・凱旋路一帶</text>
+                </g>
 
-              <!-- 標記 B：二聖路一帶 -->
-              <g class="svg-marker" transform="translate(600, 530)">
-                <circle r="10" fill="#e67e22" stroke="#ffffff" stroke-width="2.5"/>
-                <rect x="16" y="-17" width="135" height="30" rx="4" fill="rgba(12,12,14,0.9)" stroke="rgba(230,126,34,0.7)"/>
-                <text x="24" y="3" fill="#eae6df" font-size="14" font-family="Noto Sans TC">二聖路一帶</text>
-              </g>
+                <g transform="translate(1200, 1000)">
+                  <circle r="15" fill="#e67e22" stroke="#ffffff" stroke-width="4"/>
+                  <text x="26" y="10" fill="#eae6df" font-size="28" font-family="Noto Sans TC">二聖路一帶</text>
+                </g>
 
-              <!-- 標記 C：凱旋路、三多路與一心路一帶 -->
-              <g class="svg-marker" transform="translate(600, 770)">
-                <circle r="11" fill="#d9381e" stroke="#ffffff" stroke-width="2.5"/>
-                <rect x="16" y="-17" width="195" height="30" rx="4" fill="rgba(12,12,14,0.9)" stroke="rgba(230,126,34,0.7)"/>
-                <text x="24" y="3" fill="#eae6df" font-size="14" font-family="Noto Sans TC">一心路・凱旋路一帶</text>
-              </g>
+                <g transform="translate(1200, 1675)">
+                  <circle r="16" fill="#d9381e" stroke="#ffffff" stroke-width="4"/>
+                  <text x="26" y="10" fill="#eae6df" font-size="28" font-family="Noto Sans TC">一心路・凱旋路一帶</text>
+                </g>
 
-              <!-- 方位羅盤（北 N 在上方） -->
-              <g transform="translate(880, 120)">
-                <circle cx="0" cy="0" r="28" fill="rgba(12,12,14,0.85)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
-                <text x="-6" y="-34" fill="#e67e22" font-size="15" font-weight="bold" font-family="JetBrains Mono">N</text>
-                <polygon points="0,-20 -6,6 0,0 6,6" fill="#d9381e"/>
+                <!-- 北方方位標示 -->
+                <g transform="translate(1780, 220)">
+                  <circle cx="0" cy="0" r="46" fill="rgba(12,12,14,0.88)" stroke="rgba(255,255,255,0.28)" stroke-width="2.5"/>
+                  <text x="-11" y="-56" fill="#e67e22" font-size="26" font-weight="bold" font-family="JetBrains Mono">N</text>
+                  <polygon points="0,-34 -10,10 0,2 10,10" fill="#d9381e"/>
+                </g>
               </g>
             </svg>
           </div>
 
-          <!-- 下方／側邊報導範圍說明卡（純文字依據報導原文，不放未標明地點之照片） -->
+          <!-- 報導範圍說明欄 -->
           <aside class="map-info-panel">
             <h3>報導提及之影響區域說明</h3>
             <ul class="report-loc-list">
@@ -242,7 +234,7 @@
               </li>
             </ul>
             <p class="map-disclaimer">
-              ※ 註：本圖依真實地理南北／東西相對位置與路段間距比例繪製，僅標示報導原文提及之道路與區域範圍，未將個別現場照片對應至未經證實之確切路口。
+              ※ 註：本圖以 1 SVG 單位＝1 公尺等比例繪製三多路、二聖路、一心路與凱旋路之真實南北／東西相對位置（各幹道南北間距約 675 公尺），僅呈現報導原文提及之範圍，未將個別現場照片對應至未經證實之確切路口。
             </p>
           </aside>
         </div>
